@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+{{ if eq .chezmoi.os "linux" -}}
+sudo dnf --best install {{ range .packages.dnf -}} {{ . | quote }} {{ end }}
+{{ range .packages.wget -}}
+wget {{ .url | quote }}
+tar -zxvf {{ .url | base }}
+mkdir -p ~/bin
+cp -n {{ .url | base | trimSuffix ".tar.gz" }}/{{ .bin }} ~/bin
+rm -rf {{ .url | base | trimSuffix ".tar.gz" }}
+rm -f {{ .url | base }}
+{{ end -}}
+{{ end -}}
+
+{{ if eq .chezmoi.os "darwin" -}}
+{{ range .packages.darwin -}}
+brew install {{ . | quote }}
+{{ end -}}
+{{ end -}}
+
+mkdir -p $HOME/.chezmoi-npm
+cd $HOME/.chezmoi-npm
+{{ range .npm -}}
+npm install {{ . }}
+{{ end -}}
