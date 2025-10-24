@@ -5,7 +5,7 @@ Summary: Whimsical vim
 
 License: MIT
 URL: https://github.com/JanKXSKI/onavim
-Source0: %{url}/archive/refs/heads/main.tar.gz
+Source0: %{name}-%{version}.tar.gz
 
 Requires: bash >= 4.1 epel-release fzf bat the_silver_searcher nc bc gawk sed clangd
 
@@ -34,10 +34,10 @@ cp code-minimap-v0.6.8-x86_64-unknown-linux-gnu/code-minimap \
 rm -rf code-minimap-v0.6.8-x86_64-unknown-linux-gnu
 rm -f code-minimap-v0.6.8-x86_64-unknown-linux-gnu.tar.gz
 
-[[ rpm -q ncurses-devel ]] || sudo dnf install ncurses-devel
+rpm -q ncurses-devel || sudo dnf install ncurses-devel
 ./vim.sh $RPM_BUILD_ROOT /opt/onavim/%{version}
 
-[[ rpm -q npm ]] || sudo dnf install npm
+rpm -q npm || sudo dnf install npm
 ./npm.sh $RPM_BUILD_ROOT /opt/onavim/%{version}
 
 (cd src && cp --parents $(git ls-files etc sh) $RPM_BUILD_ROOT/opt/onavim/%{version})
