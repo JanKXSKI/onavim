@@ -1,0 +1,4 @@
+#! /usr/bin/env bash
+
+# for testing - running with the system code-minimap
+code-minimap "$@"

@@ -56,10 +56,10 @@ let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
 
 call plug#begin()
-Plug 'junegunn/fzf'
-Plug 'morhetz/gruvbox'
-Plug 'easymotion/vim-easymotion'
-Plug 'yegappan/lsp'
+Plug 'junegunn/fzf', { 'dir': $VIM }
+Plug 'morhetz/gruvbox', { 'dir': $VIM }
+Plug 'easymotion/vim-easymotion', { 'dir': $VIM }
+Plug 'yegappan/lsp', { 'dir': $VIM }
 call plug#end()
 
 try
@@ -101,14 +101,12 @@ let lspServers = [#{
             \  }, #{
             \    name: 'pyright',
             \    filetype: 'python',
-            \    path: '/usr/local/lib/node_modules/.bin/pyright-langserver',
+            \    path: $VIM..'/../node_modules/.bin/pyright-langserver',
             \    args: ['--stdio'],
             \    workspaceConfig: #{
             \      python: #{
-            \        pythonPath: '/usr/bin/python'
+            \        pythonPath: '/usr/bin/python3'
             \    }},
-            \    debug: 'on',
-            \    traceLevel: 'verbose',
             \  }]
 autocmd User LspSetup call LspAddServer(lspServers)
 nnoremap <Leader>? :LspDiagCurrent <CR>

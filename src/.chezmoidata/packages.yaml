@@ -5,7 +5,7 @@ packages:
     - bat
     - tree
     - the_silver_searcher
-    - ncurses-devel
+    - 
     - nc
     - bc
     - npm

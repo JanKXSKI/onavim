@@ -20,7 +20,7 @@ function setPath {
     path=$1
     lines=$(wc -l <$path)
     scale=$(echo "s = $((($height) * 4)) / $lines; if (s > 1) s = 1; s" | bc -l)
-    code-minimap --padding $width -V $scale -H 0.2 $path\
+    $(dirname $0)/../bin/code-minimap --padding $width -V $scale -H 0.2 $path\
         | cut -c 1-$width\
         | awk -v c=$(tput el) 'NR == 1 { printf("%s%s",$0,c) } NR > 1 { printf("\n%s%s",$0,c) }'\
         >"$rund/$$.tmp"
