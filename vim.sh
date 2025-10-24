@@ -25,6 +25,6 @@ export VIM="$buildRoot$onavimDir/vim"
 export VIMRUNTIME="$VIM/vim91"
 curl -fLo "$VIM/vim91/autoload/plug.vim" --create-dirs "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 
-cp -r "$(dirname $0)/src/vim" "$buildRoot$onavimDir"
+cp -r $(dirname $0)/src/vim/* $VIMRUNTIME
 
-#"$buildRoot$onavimDir/bin/vim" --cmd "set runtimepath=$VIMRUNTIME" -u "$VIM/vimrc" -c "PlugInstall | qa"
+"$buildRoot$onavimDir/bin/vim" --cmd "set runtimepath=$VIMRUNTIME" -u "$VIMRUNTIME/vimrc" -c "PlugInstall | qa"
