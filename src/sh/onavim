@@ -15,7 +15,7 @@ function launch {
         folder=$(ssh "$remote" "realpath '${1#*:}'")
         sesl="$remote:$folder"
         $(dirname $0)/WriteLeastRecentlyUsed "$rund/sessions" "$sesl"
-        rdir="bin/run/sessions-from/$me"
+        rdir=".onavim/sessions-from/$me"
         rdir=$(ssh "$remote" "mkdir -p '$rdir' && realpath '$rdir'")
         sess="$rdir/sessions"
         scp "$rund/sessions" "$remote:$sess"
