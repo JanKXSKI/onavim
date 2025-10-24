@@ -42,6 +42,11 @@ rm -f code-minimap-v0.6.8-x86_64-unknown-linux-gnu.tar.gz
 
 (cd src && cp --parents $(git ls-files etc sh) $RPM_BUILD_ROOT/opt/onavim/%{version})
 
+export VIM="$onavimDir/etc/vim"
+export VIMRUNTIME="$onavimDir/vim/vim91"
+export VIMINIT=":"
+$RPM_BUILD_ROOT/opt/onavim/%{version}/bin/vim -i NONE -c "PlugInstall | qa"
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
