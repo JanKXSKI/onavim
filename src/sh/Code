@@ -52,7 +52,11 @@ while ! [[ -e "$explorerServerSocket" ]]; do sleep 0.1s; done
 while ! [[ -e "$minimapServerSocket" ]]; do sleep 0.1s; done
 while ! [[ -e "$opGrepServerSocket" ]]; do sleep 0.1s; done
 
-$(dirname $0)/../bin/vim $sessionOption \
+etc=$(realpath "$(dirname $0)/../etc")
+export VIM="$etc/vim"
+export VIMINIT=":echo 'hi!'"
+export LANG=en_US.UTF-8
+$(dirname $0)/../bin/vim -i NONE $sessionOption \
     --cmd "let g:codeSessionsFile=\"$sess\""\
     --cmd "let g:codeCurrentSession=\"$(tail -n 1 $sess)\""\
     --cmd "let g:codeExplorerWidth=\"$explorerWidth\""\

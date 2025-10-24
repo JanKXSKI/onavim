@@ -1,8 +1,5 @@
 #! /usr/bin/env bash
 
 # for testing - running with the system vim
-etc="$(dirname $0)/../etc"
 export VIMRUNTIME="/usr/local/share/vim/vim91"
-export VIM="$etc/vim"
-export VIMINIT=":set runtimepath=$etc/vim,$VIMRUNTIME|:source $etc/vim/vimrc"
 vim "$@"
