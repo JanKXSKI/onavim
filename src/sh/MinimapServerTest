@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-rund="$(dirname $0)/run"
+rund="$XDG_RUNTIME_DIR/onavim"
 mkdir -p "$rund"
 . $(dirname $0)/logging.sh "$rund"
 
