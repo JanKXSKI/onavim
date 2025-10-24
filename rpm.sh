@@ -1,6 +1,7 @@
 #! /usr/bin/env bash
 
 set -e
+set -x
 
 onavim=$(dirname $0)
 read version <$onavim/version
