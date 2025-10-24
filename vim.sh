@@ -21,10 +21,12 @@ make \
     MAKE="make -e" \
     install
 ))
-export VIM="$buildRoot$onavimDir/vim"
-export VIMRUNTIME="$VIM/vim91"
-curl -fLo "$VIM/vim91/autoload/plug.vim" --create-dirs "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 
-cp -r $(dirname $0)/src/vim/* $VIMRUNTIME
+etc="$buildRoot$onavimDir/etc"
+mkdir -p "$etc"
+cp -r "$(dirname $0)/src/vim" "$etc"
+curl -fLo "$etc/vim/autoload/plug.vim" --create-dirs "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 
-"$buildRoot$onavimDir/bin/vim" --cmd "set runtimepath=$VIMRUNTIME" -u "$VIMRUNTIME/vimrc" -c "PlugInstall | qa"
+export VIM="$etc/vim"
+export VIMRUNTIME="$buildRoot$onavimDir/vim/vim91"
+"$buildRoot$onavimDir/bin/vim" --cmd "set runtimepath=$etc/vim,$VIMRUNTIME" -c "PlugInstall | qa"

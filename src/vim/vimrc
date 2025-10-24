@@ -101,7 +101,7 @@ let g:lspServers = [#{
             \  }, #{
             \    name: 'pyright',
             \    filetype: 'python',
-            \    path: $VIM..'/../node_modules/.bin/pyright-langserver'
+            \    path: $VIM..'/../node_modules/.bin/pyright-langserver',
             \    args: ['--stdio'],
             \    workspaceConfig: #{
             \      python: #{
