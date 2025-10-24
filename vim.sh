@@ -24,7 +24,7 @@ make \
 
 etc="$buildRoot$onavimDir/etc"
 mkdir -p "$etc"
-cp -r "$(dirname $0)/src/vim" "$etc"
+cp -r "$(dirname $0)/src/etc/vim" "$etc"
 curl -fLo "$etc/vim/autoload/plug.vim" --create-dirs "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 
 export VIMRUNTIME="$buildRoot$onavimDir/vim/vim91"
