@@ -21,11 +21,3 @@ make \
     MAKE="make -e" \
     install
 ))
-
-etc="$buildRoot$onavimDir/etc"
-mkdir -p "$etc"
-cp -r "$(dirname $0)/src/etc/vim" "$etc"
-
-export VIMRUNTIME="$buildRoot$onavimDir/vim/vim91"
-export VIMINIT=":set runtimepath=$etc/vim,$VIMRUNTIME|:source $etc/vim/vimrc"
-"$buildRoot$onavimDir/bin/vim" -c "PlugInstall | qa"
