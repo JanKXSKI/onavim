@@ -5,5 +5,5 @@ set -x
 buildRoot=$1
 onavimDir=$2
 
-cd $bulidRoot/$onavimDir
+cd $buildRoot/$onavimDir
 npm install pyright
