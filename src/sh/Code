@@ -72,4 +72,4 @@ export LANG=en_US.UTF-8
     --cmd "let g:codeMinimapServerSocket=\"$minimapServerSocket\""\
     --cmd "let g:codeOpGrepServerSocket=\"$opGrepServerSocket\""
 
-export PATH="${PATH#*:}
+export PATH="${PATH#*:}"
