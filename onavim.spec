@@ -7,7 +7,7 @@ License: MIT
 URL: https://github.com/JanKXSKI/onavim
 Source0: %{name}-%{version}.tar.gz
 
-Requires: bash >= 4.1 epel-release fzf bat the_silver_searcher nc bc gawk sed clangd
+Requires: bash >= 4.1 epel-release fzf bat the_silver_searcher nc bc gawk sed
 
 %description
 More or less vim
