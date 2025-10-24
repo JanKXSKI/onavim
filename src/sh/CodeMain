@@ -6,5 +6,5 @@ mkdir -p "$rund"
 
 tmuxSocket="/tmp/$$.code.tmux.socket"
 trap "rm $tmuxSocket" EXIT
-tmux -2 -S "$tmuxSocket" new "$(dirname $0)/Code $tmuxSocket $*"
+tmux -2 -S "$tmuxSocket" -f "$(dirname $0)/../etc/tmux.conf" new "$(dirname $0)/Code $tmuxSocket $*"
 tmux -2 -S "$tmuxSocket" wait-for "$tmuxSocket"
