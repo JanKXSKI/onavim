@@ -5,7 +5,7 @@ Summary: Whimsical vim
 
 License: MIT
 URL: https://github.com/JanKXSKI/onavim
-Source0: %{name}-%{version}.tar.gz
+Source0: %{url}/archive/refs/heads/main.tar.gz
 
 Requires: bash >= 4.1 epel-release fzf bat the_silver_searcher nc bc gawk sed clangd
 
@@ -40,7 +40,7 @@ rm -f code-minimap-v0.6.8-x86_64-unknown-linux-gnu.tar.gz
 [[ rpm -q npm ]] || sudo dnf install npm
 ./npm.sh $RPM_BUILD_ROOT /opt/onavim/%{version}
 
-cp src/etc/tmux.conf $RPM_BUILD_ROOT/opt/onavim/%{version}/etc/tmux.conf
+(cd src && cp --parents $(git ls-files etc sh) $RPM_BUILD_ROOT/opt/onavim/%{version})
 
 %clean
 rm -rf $RPM_BUILD_ROOT
