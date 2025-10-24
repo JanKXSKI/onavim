@@ -40,7 +40,8 @@ rpm -q ncurses-devel || sudo dnf install ncurses-devel
 rpm -q npm || sudo dnf install npm
 ./npm.sh $RPM_BUILD_ROOT /opt/onavim/%{version}
 
-(cd src && cp --parents $(git ls-files etc sh) $RPM_BUILD_ROOT/opt/onavim/%{version})
+cp -r src/etc $RPM_BUILD_ROOT/opt/onavim/%{version}
+cp -r src/sh $RPM_BUILD_ROOT/opt/onavim/%{version}
 
 ./plug.sh $RPM_BUILD_ROOT /opt/onavim/%{version}
 
