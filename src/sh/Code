@@ -54,7 +54,7 @@ while ! [[ -e "$opGrepServerSocket" ]]; do sleep 0.1s; done
 
 etc=$(realpath "$(dirname $0)/../etc")
 export VIM="$etc/vim"
-export VIMINIT=":echo 'hi!'"
+export VIMINIT=":"
 export LANG=en_US.UTF-8
 $(dirname $0)/../bin/vim -i NONE $sessionOption \
     --cmd "let g:codeSessionsFile=\"$sess\""\
