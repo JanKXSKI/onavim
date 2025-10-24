@@ -101,7 +101,7 @@ let lspServers = [#{
             \  }, #{
             \    name: 'pyright',
             \    filetype: 'python',
-            \    path: $HOME..'/.chezmoi-npm/node_modules/.bin/pyright-langserver',
+            \    path: '/usr/local/lib/node_modules/.bin/pyright-langserver',
             \    args: ['--stdio'],
             \    workspaceConfig: #{
             \      python: #{

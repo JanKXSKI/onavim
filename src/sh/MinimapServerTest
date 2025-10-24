@@ -2,7 +2,7 @@
 
 rund="$(dirname $0)/run"
 mkdir -p "$rund"
-. ~/.sh/logging.sh "$rund"
+. $(dirname $0)/logging.sh "$rund"
 
 socket=$1
 function request {

@@ -1,0 +1,5 @@
+#! /usr/bin/env bash
+
+# for testing - running with the system vim
+export VIM=$(dirname $0)/../vim
+vim "$@"

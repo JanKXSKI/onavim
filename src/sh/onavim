@@ -2,7 +2,7 @@
 
 rund=$(dirname $0)/run
 mkdir -p "$rund"
-. ~/.sh/logging.sh "$rund"
+. $(dirname $0)/logging.sh "$rund"
 
 sessionLocation="$1"
 [[ -z "$sessionLocation" && -e "$rund/sessions" ]] && sessionLocation=$(tail -n 1 "$rund/sessions")
@@ -14,17 +14,17 @@ function launch {
         me=$(hostname -f)
         folder=$(ssh "$remote" "realpath '${1#*:}'")
         sesl="$remote:$folder"
-        ~/.sh/WriteLeastRecentlyUsed "$rund/sessions" "$sesl"
+        $(dirname $0)/WriteLeastRecentlyUsed "$rund/sessions" "$sesl"
         rdir="bin/run/sessions-from/$me"
         rdir=$(ssh "$remote" "mkdir -p '$rdir' && realpath '$rdir'")
         sess="$rdir/sessions"
         scp "$rund/sessions" "$remote:$sess"
-        ssh -t "$remote" "chezmoi update && ~/.sh/CodeMain '$folder' '$sess'"
+        ssh -t "$remote" "$(dirname $0)/CodeMain '$folder' '$sess'"
         scp "$remote:$sess" "$rund/sessions"
     else
         sesl="$(realpath $1)"
-        ~/.sh/WriteLeastRecentlyUsed "$rund/sessions" "$sesl"
-        ~/.sh/CodeMain "$sesl" "$rund/sessions"
+        $(dirname $0)/WriteLeastRecentlyUsed "$rund/sessions" "$sesl"
+        $(dirname $0)/CodeMain "$sesl" "$rund/sessions"
     fi
     next=$(tail -n 1 "$rund/sessions")
     [[ "$next" == "$sesl" ]] && return

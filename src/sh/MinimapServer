@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 rund="$(dirname $0)/run"
 mkdir -p "$rund"
-. ~/.sh/logging.sh "$rund"
+. $(dirname $0)/logging.sh "$rund"
 
 socket=$rund/$$.socket
 touch "$rund/$$.tmp"

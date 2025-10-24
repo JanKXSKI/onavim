@@ -2,7 +2,7 @@
 
 rund=$(realpath $(dirname $0))/run
 mkdir -p "$rund"
-. ~/.sh/logging.sh "$rund"
+. $(dirname $0)/logging.sh "$rund"
 
 width=$1
 height=$2
