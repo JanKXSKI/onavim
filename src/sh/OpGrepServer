@@ -8,7 +8,13 @@ infifo="$rund/$$.in.fifo"
 outfifo="$rund/$$.out.fifo"
 mkfifo "$infifo"
 mkfifo "$outfifo"
-trap "rm $infifo; rm $outfifo; rm $socket" EXIT
+function cleanup {
+    rm "$outfifo"
+    rm "$infifo"
+    rm "$socket"
+}
+
+trap cleanup EXIT
 
 function reinit {
     previewArgs="$*"
@@ -53,3 +59,4 @@ ncpid=$!
 exec {ifd}>"$infifo"
 mainLoop <"$outfifo"
 kill $ncpid
+exec {ifd}>&-

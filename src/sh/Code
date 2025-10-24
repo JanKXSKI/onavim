@@ -33,9 +33,11 @@ minimapServerSocket="$rund/$minimapServerPid.socket"
 
 opGrepServerSocket="$rund/$$.OpGrepServer.socket"
 $(dirname $0)/OpGrepServer "$opGrepServerSocket" &
+opGrepServerPid=$!
 
 function cleanup {
-    $(dirname $0)/RequestSend "$rund/$$.OpGrepServer.socket" shutdown
+    kill $opGrepServerPid
+    wait $opGrepServerPid
     rm "$rund/$$.fifo"
     tmux -2 -S "$tmuxSocket" kill-window
     tmux -2 -S "$tmuxSocket" wait-for -S "$tmuxSocket"
