@@ -27,6 +27,6 @@ mkdir -p "$etc"
 cp -r "$(dirname $0)/src/vim" "$etc"
 curl -fLo "$etc/vim/autoload/plug.vim" --create-dirs "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
 
-export VIM="$etc/vim"
 export VIMRUNTIME="$buildRoot$onavimDir/vim/vim91"
-"$buildRoot$onavimDir/bin/vim" --cmd "set runtimepath=$etc/vim,$VIMRUNTIME" -c "PlugInstall | qa"
+export VIMINIT=":set runtimepath=$etc/vim,$VIMRUNTIME|:source $etc/vim/vimrc"
+"$buildRoot$onavimDir/bin/vim" -c "PlugInstall | qa"
