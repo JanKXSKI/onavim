@@ -55,7 +55,7 @@ let g:gruvbox_contrast_dark="soft"
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
 
-call plug#begin($VIMRUNTIME..'/plugged')
+call plug#begin($VIM..'/plugged')
 Plug 'junegunn/fzf'
 Plug 'morhetz/gruvbox'
 Plug 'easymotion/vim-easymotion'
