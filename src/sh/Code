@@ -1,8 +1,10 @@
 #! /usr/bin/env bash
 
+sh=$(realpath $(dirname $0))
+
 rund="$XDG_RUNTIME_DIR/onavim"
 mkdir -p "$rund"
-. $(dirname $0)/logging.sh "$rund"
+. $sh/logging.sh "$rund"
 
 tmuxSocket="$1"
 cd "$2"
@@ -15,24 +17,24 @@ minimapWidth=15
 side=$(($explorerWidth + $minimapWidth))
 bot=7
 
-tmux -2 -S "$tmuxSocket" split-window -hdP -l $side -F "#{pane_index} #{pane_pid} #{pane_height}" "$(dirname $0)/ExplorerServer" >"$rund/$$.fifo" &
+tmux -2 -S "$tmuxSocket" split-window -hdP -l $side -F "#{pane_index} #{pane_pid} #{pane_height}" "$sh/ExplorerServer" >"$rund/$$.fifo" &
 read explorerPaneId explorerServerPid h <"$rund/$$.fifo"
 explorerServerSocket="$rund/$explorerServerPid.socket"
 explorerHeight=$(($h - $bot - 1))
 
 tmux -2 -S "$tmuxSocket" split-window -d -t $explorerPaneId -l $bot \
-    "$(dirname $0)/Status $side $bot '$sess' '$tmuxSocket'"
+    "$sh/Status $side $bot '$sess' '$tmuxSocket'"
 tmux -2 -S "$tmuxSocket" pipe-pane -I -t {bottom-right} "echo 'sessions'"
 tmux -2 -S "$tmuxSocket" bind-key -n C-e \
     pipe-pane -I -t {bottom-right} "echo 'explorer'" \\\; \
     select-pane -t {bottom-right}
 
-tmux -2 -S "$tmuxSocket" split-window -hdPb -t $explorerPaneId -l $minimapWidth -F "#{pane_pid} #{pane_width} #{pane_height}" "$(dirname $0)/MinimapServer" >"$rund/$$.fifo" &
+tmux -2 -S "$tmuxSocket" split-window -hdPb -t $explorerPaneId -l $minimapWidth -F "#{pane_pid} #{pane_width} #{pane_height}" "$sh/MinimapServer" >"$rund/$$.fifo" &
 read minimapServerPid minimapWidth minimapHeight <"$rund/$$.fifo"
 minimapServerSocket="$rund/$minimapServerPid.socket"
 
 opGrepServerSocket="$rund/$$.OpGrepServer.socket"
-$(dirname $0)/OpGrepServer "$opGrepServerSocket" &
+$sh/OpGrepServer "$opGrepServerSocket" &
 opGrepServerPid=$!
 
 function cleanup {
@@ -48,13 +50,13 @@ sessionVim="$(dirname $sess)/vim-sessions/$(pwd | sed 's#/#ESCAPED_SLASH#g').vim
 [[ -e $sessionVim ]] && sessionOption="-S $sessionVim"
 
 tmux -2 -S "$tmuxSocket" set -g prefix None
-export PATH="$(dirname $0)/restoretmuxbin:$PATH"
+export PATH="$sh/restoretmuxbin:$PATH"
 
 while ! [[ -e "$explorerServerSocket" ]]; do sleep 0.1s; done
 while ! [[ -e "$minimapServerSocket" ]]; do sleep 0.1s; done
 while ! [[ -e "$opGrepServerSocket" ]]; do sleep 0.1s; done
 
-onavimDir=$(realpath "$(dirname $0)/..")
+onavimDir=$(realpath "$sh/..")
 export VIM="$onavimDir/etc/vim"
 export VIMRUNTIME="$onavimDir/vim/vim91"
 export VIMINIT=":"
