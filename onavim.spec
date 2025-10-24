@@ -26,6 +26,7 @@ cat >$RPM_BUILD_ROOT/%{_bindir}/onavim <<EOF
 #! /usr/bin/env bash
 /opt/onavim/%{version}/sh/onavim "$@"
 EOF
+chmod +x $RPM_BUILD_ROOT/%{_bindir}/onavim
 
 wget https://github.com/wfxr/code-minimap/releases/download/v0.6.8/code-minimap-v0.6.8-x86_64-unknown-linux-gnu.tar.gz
 tar -zxvf code-minimap-v0.6.8-x86_64-unknown-linux-gnu.tar.gz
