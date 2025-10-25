@@ -2,5 +2,5 @@
 
 # for testing - running with the system vim
 export VIMRUNTIME="/usr/local/share/vim/vim91"
-[[ ! -d $VIMRUNTIME ]] export VIMRUNTIME="/opt/homebrew/share/vim/vim91"
+[[ ! -d $VIMRUNTIME ]] && export VIMRUNTIME="/opt/homebrew/share/vim/vim91"
 vim "$@"
