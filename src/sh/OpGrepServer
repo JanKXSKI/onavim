@@ -20,7 +20,7 @@ function reinit {
     previewArgs="$*"
     file=$1
     cont=$(($2-2))
-    agas="${@:3}"
+    agas=("${@:3}")
     maxi=$(ag "${agas[@]}" $file | wc -l)
     curi=0
 }
