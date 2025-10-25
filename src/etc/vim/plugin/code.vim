@@ -69,7 +69,7 @@ if exists("g:codeSessionsFile")
         if !CodeShouldRunAuto()
             return
         endif
-        call system(expand("<script>", ":h").."/../../../sh/WriteLeastRecentlyUsed "..g:codeSessionsFile.." "..a:nextSessionPath)
+        call system(expand("<script>:h").."/../../../sh/WriteLeastRecentlyUsed "..g:codeSessionsFile.." "..a:nextSessionPath)
         let l:vimSessionsDir = fnamemodify(g:codeSessionsFile, ":p:h").."/vim-sessions"
         call mkdir(l:vimSessionsDir, "p")
         exe "mksession! "..l:vimSessionsDir.."/"..fnamemodify(getcwd(), ":gs#/#ESCAPED_SLASH#")..".vim"
