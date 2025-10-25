@@ -2,7 +2,7 @@
 
 sh=$(realpath $(dirname $0))
 
-rund="$XDG_RUNTIME_DIR/onavim"
+rund="$HOME/.onavim.run"
 mkdir -p "$rund"
 . $sh/logging.sh "$rund"
 
