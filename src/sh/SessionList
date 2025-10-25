@@ -5,4 +5,4 @@ mkdir -p "$rund"
 . $(dirname $0)/logging.sh "$rund"
 
 tac "$1" |
-    awk -v u="$HOME" -v w=$2 -v h=$3 -f "$(dirname $0)/SessionList.awk"
+    gawk -v u="$HOME" -v w=$2 -v h=$3 -f "$(dirname $0)/SessionList.awk"

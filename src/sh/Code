@@ -46,7 +46,7 @@ function cleanup {
 }
 trap cleanup EXIT
 
-sessionVim="$(dirname $sess)/vim-sessions/$(pwd | sed 's#/#ESCAPED_SLASH#g').vim"
+sessionVim="$(dirname $sess)/vim-sessions/$(pwd | gsed 's#/#ESCAPED_SLASH#g').vim"
 [[ -e $sessionVim ]] && sessionOption="-S $sessionVim"
 
 tmux -2 -S "$tmuxSocket" set -g prefix None

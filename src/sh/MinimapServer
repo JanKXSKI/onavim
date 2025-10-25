@@ -22,7 +22,7 @@ function setPath {
     scale=$(echo "s = $((($height) * 4)) / $lines; if (s > 1) s = 1; s" | bc -l)
     $(dirname $0)/../bin/code-minimap --padding $width -V $scale -H 0.2 $path\
         | cut -c 1-$width\
-        | awk -v c=$(tput el) 'NR == 1 { printf("%s%s",$0,c) } NR > 1 { printf("\n%s%s",$0,c) }'\
+        | gawk -v c=$(tput el) 'NR == 1 { printf("%s%s",$0,c) } NR > 1 { printf("\n%s%s",$0,c) }'\
         >"$rund/$$.tmp"
     from=$(mapDo $2)
     to=$(mapDo $3)
@@ -41,13 +41,13 @@ function keyDo {
 function deleteDo {
     [[ $2 -lt $1 || $1 -lt 1 ]] && return
     tput cup $(($1 - 1)) 0
-    cat "$rund/$$.tmp" | sed -n "$1,$2{s#^#$(tput setaf 245)#;p;}"
+    cat "$rund/$$.tmp" | gsed -n "$1,$2{s#^#$(tput setaf 245)#;p;}"
 }
 
 function addDo {
     [[ $2 -lt $1 || $1 -lt 1 ]] && return
     tput cup $(($1 - 1)) 0
-    cat "$rund/$$.tmp" | sed -n "$1,$2{s#^#$(tput sgr0)$(tput setab 237)#;s#\$#$(tput sgr0)#;p;}"
+    cat "$rund/$$.tmp" | gsed -n "$1,$2{s#^#$(tput sgr0)$(tput setab 237)#;s#\$#$(tput sgr0)#;p;}"
 }
 
 function caseDo {

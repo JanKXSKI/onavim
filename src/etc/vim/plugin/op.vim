@@ -2,13 +2,13 @@ let s:bindPreviewUpDown = "'--bind', 'ctrl-u:preview-half-page-up', '--bind', 'c
 let s:bindClearQuery = "'--bind', 'ctrl-l:clear-query'"
 let s:defaultBinds = s:bindPreviewUpDown..", "..s:bindClearQuery
 
-let s:source = "'find . -path ./.git -prune -or \"(\" -type f -or -type l \")\" -and ! -name *.swp -print | sed s#^\\./##'"
+let s:source = "'find . -path ./.git -prune -or \"(\" -type f -or -type l \")\" -and ! -name *.swp -print | gsed s#^\\./##'"
 let s:preview = "'bat -n --color=always {}'"
 let s:options = "['--preview', "..s:preview..", "..s:defaultBinds.."]"
 exe "command OpFile call fzf#run(fzf#wrap({'source': " s:source ",'options':" s:options ", 'sink': 'edit'}))"
 
 let s:source = "'git log --format=''%h %an %ar: %s'' -- '..expand('%')"
-let s:previewGit = "'echo {} | awk ''{print $1}'' | xargs -I{} git show {}:'..expand('%')"
+let s:previewGit = "'echo {} | gawk ''{print $1}'' | xargs -I{} git show {}:'..expand('%')"
 let s:preview = s:previewGit.."..' | bat -n --color=always -l='..split(expand('%:t'), '\\.')[-1]"
 let s:previewWindow = "'+'..line('w0')"
 let s:options = "['--preview', "..s:preview..", '--preview-window', "..s:previewWindow..", "..s:defaultBinds.."]"

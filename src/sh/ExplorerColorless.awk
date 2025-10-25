@@ -1,5 +1,3 @@
-#!/usr/bin/awk -f
-
 BEGIN {
     ses[0] = " "
     ses[1] = "│"

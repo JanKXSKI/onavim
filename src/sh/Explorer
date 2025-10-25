@@ -13,13 +13,13 @@ function filteredLs {
 }
 
 function toNeedle {
-    sed\
+    gsed\
         -e "\\:^$1$: { s:.*:$2 $3 $4 \\:&:; q; }"\
         -e "s:.*:$2 $3 1 \\:&:"
 }
 
 function afterNeedle {
-    sed -e "0,\\:^$1$: d" -e "s:.*:$2 $3 0 \\:&:"
+    gsed -e "0,\\:^$1$: d" -e "s:.*:$2 $3 0 \\:&:"
 }
 
 function irRec {
@@ -40,7 +40,7 @@ function irRec {
 }
 
 function ir {
-    echo $path | sed 's#/#/\n#g' | irRec '.'
+    echo $path | gsed 's#/#/\n#g' | irRec '.'
 }
 
 function irWithHeightApplied {
@@ -48,7 +48,7 @@ function irWithHeightApplied {
     ir >"$tmpf"
     pat='/^[0-9] [0-9] 3/'
     coun="$pat { printf(\"%d \", NR) } END { print NR }"
-    read line tota < <(awk "$coun" "$tmpf")
+    read line tota < <(gawk "$coun" "$tmpf")
     context=$(($height/2))
     if [[ $line -le $context ]]; then
         cat $tmpf | head -n $height
@@ -57,7 +57,7 @@ function irWithHeightApplied {
     else
         f=$(($line - $context))
         t=$(($line + $context))
-        cat $tmpf | sed -n -e "$f,$t p" -e "$((t + 1)) q"
+        cat $tmpf | gsed -n -e "$f,$t p" -e "$((t + 1)) q"
     fi 
     rm $tmpf
 }
@@ -71,11 +71,11 @@ function sedAddIcons {
     si='{ s:.*:" $2 " &:;p;d; }'
     sa='{ s:.*:" $3 " &:;p;d; }'
     cat $(dirname $0)/ExplorerIcons.txt |\
-        awk "{ printf \"$sedi $si\\n$seda $sa\\n\" }"
+        gawk "{ printf \"$sedi $si\\n$seda $sa\\n\" }"
 }
 
 function addIcons {
-    sed -f <(sedAddIcons)
+    gsed -f <(sedAddIcons)
 }
 
 function colorless {
@@ -88,11 +88,11 @@ function sedGetColors {
     sa2='{ s:.*:\\:" $5 ":;p;d; }'
     sa3='{ s:.*:\033[48;5;237m\\:" $5 ":;p;d; }'
     cat $(dirname $0)/ExplorerIcons.txt |\
-        awk "{ printf \"$sedi $si\\n$seda2 $sa2\\n$seda3 $sa3\\n\" }"
+        gawk "{ printf \"$sedi $si\\n$seda2 $sa2\\n$seda3 $sa3\\n\" }"
 }
 
 function getColors {
-    sed -f <(sedGetColors)
+    gsed -f <(sedGetColors)
 }
 
 function colorAnnotated {
@@ -100,7 +100,7 @@ function colorAnnotated {
 }
 
 function applyColor {
-    awk -F":" '{ gsub(/^>*[ ]*[│╰]? /, $1 "&" $2, $3); print $3 "\033[0m" $1 $4 "\033[0m" }'
+    gawk -F":" '{ gsub(/^>*[ ]*[│╰]? /, $1 "&" $2, $3); print $3 "\033[0m" $1 $4 "\033[0m" }'
 }
 
 irf="$rund/$$.ir.tmp"
