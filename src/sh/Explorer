@@ -1,4 +1,5 @@
 #! /usr/bin/env bash
+        | gawk -v c=$(tput el) 'NR == 1 { printf("%s%s",$0,c) } NR > 1 { printf("\n%s%s",$0,c) }'
 
 rund="$HOME/.onavim.run"
 mkdir -p "$rund"
@@ -6,61 +7,6 @@ mkdir -p "$rund"
 
 path=$1
 width=$2
-height=$3
-
-function filteredLs {
-    ls -pA1 $1 | grep -v -e ".swp$" -e "^Session.vim$"
-}
-
-function toNeedle {
-    gsed\
-        -e "\\:^$1$: { s:.*:$2 $3 $4 \\:&:; q; }"\
-        -e "s:.*:$2 $3 1 \\:&:"
-}
-
-function afterNeedle {
-    gsed -e "0,\\:^$1$: d" -e "s:.*:$2 $3 0 \\:&:"
-}
-
-function irRec {
-    local dir=$1
-    local levr="${2:-0}"
-    local foll=$(($levr/5))
-    local levl=$(($levr%5))
-    local next;
-    local selt;
-    if read next; then
-        [[ $next == */ ]] && selt=2 || selt=3
-        filteredLs $dir | toNeedle $next $foll $levl $selt
-        if [[ $selt == 2 ]]; then
-            irRec "$dir/${next%/}" $(($levr + 1))
-        fi
-        filteredLs $dir | afterNeedle $next $foll $levl
-    fi
-}
-
-function ir {
-    echo $path | gsed 's#/#/\n#g' | irRec '.'
-}
-
-function irWithHeightApplied {
-    tmpf="$rund/$$.tmp"
-    ir >"$tmpf"
-    pat='/^[0-9] [0-9] 3/'
-    coun="$pat { printf(\"%d \", NR) } END { print NR }"
-    read line tota < <(gawk "$coun" "$tmpf")
-    context=$(($height/2))
-    if [[ $line -le $context ]]; then
-        cat $tmpf | head -n $height
-    elif [[ $(($tota - $line)) -le $context ]]; then
-        cat $tmpf | tail -n $height
-    else
-        f=$(($line - $context))
-        t=$(($line + $context))
-        cat $tmpf | gsed -n -e "$f,$t p" -e "$((t + 1)) q"
-    fi 
-    rm $tmpf
-}
 
 sedi='\\:^[0-9] [0-9] [01] \\:" $1 "\$:'
 seda='\\:^[0-9] [0-9] [23] \\:" $1 "\$:'

@@ -4,20 +4,40 @@ mkdir -p "$rund"
 . $(dirname $0)/logging.sh "$rund"
 
 socket=$rund/$$.socket
-trap "rm $socket" EXIT
+tmpf=$rund/$$.tmp
+trap "rm $socket; rm $tmpf" EXIT
 
 function init {
     width=$1
     height=$2
 }
 
+function heightAppliedTmpf {
+    stats=$(tail -n 1 $tmpf)
+    line=${states%:*}
+    tota=${states#*.}
+    context=$(($height/2))
+    if [[ $line -le $context ]]; then
+        cat $tmpf | head -n $height
+    elif [[ $(($tota - $line)) -le $context ]]; then
+        cat $tmpf | tail -n $height
+    else
+        first=$(($line - $context))
+        last=$(($line + $context))
+        cat $tmpf | gsed -n -e "$first,$last p" -e "$(($last + 1)) q"
+    fi 
+}
+
 function previewWithPath {
     if [[ -z $height ]]; then
         return
     fi
+    echo $1 |
+        gsed 's#/#/\n#g' |
+        gawk 'BEGIN { l="." }{ l=l"/"$0; print l }' |
+        $(dirname $0)/ExplorerList "$1" > $tmpf
     tput cup 0 0
-    $(dirname $0)/Explorer $1 $width $height\
-        | gawk -v c=$(tput el) 'NR == 1 { printf("%s%s",$0,c) } NR > 1 { printf("\n%s%s",$0,c) }'
+    heightAppliedTmpf | $(dirname $0)/ExplorerRender $1 $width
     tput ed
 }
 
