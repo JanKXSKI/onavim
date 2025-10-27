@@ -18,13 +18,13 @@ function heightAppliedTmpf {
     tota=${states#*.}
     context=$(($height/2))
     if [[ $line -le $context ]]; then
-        sed '$d' $tmpf | head -n $height
+        gsed '$d' $tmpf | head -n $height
     elif [[ $(($tota - $line)) -le $context ]]; then
-        sed '$d' $tmpf | tail -n $height
+        gsed '$d' $tmpf | tail -n $height
     else
         first=$(($line - $context))
         last=$(($line + $context))
-        sed '$d' $tmpf | gsed -n -e "$first,$last p" -e "$(($last + 1)) q"
+        gsed -n -e "$first,$last p" -e "$(($last + 1)) q" $tmpf
     fi
 }
 
