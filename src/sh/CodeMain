@@ -4,6 +4,8 @@ rund="$HOME/.onavim.run"
 mkdir -p "$rund"
 . $(dirname $0)/logging.sh "$rund"
 
+sed --version | grep -q GNU && export PATH="$(realpath $(dirname $0))/../gnu-alias:$PATH"
+
 tmuxSocket="/tmp/$$.code.tmux.socket"
 trap "rm $tmuxSocket" EXIT
 tmux -2 -S "$tmuxSocket" -f "$(dirname $0)/../etc/tmux.conf" new "$(dirname $0)/Code $tmuxSocket $*"
