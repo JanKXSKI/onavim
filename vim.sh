@@ -9,6 +9,7 @@ git clone https://github.com/vim/vim.git
 (cd vim
 git checkout "v9.1.1868"
 sed -i '1s:/usr/bin/python:/usr/bin/python3:' runtime/tools/demoserver.py
+sed -i '1s:csh:bash:' runtime/tools/vim132
 (cd src
 make \
     DESTDIR="$buildRoot" \
