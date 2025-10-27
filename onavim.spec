@@ -38,9 +38,6 @@ rm -f code-minimap-v0.6.8-x86_64-unknown-linux-gnu.tar.gz
 rpm -q ncurses-devel || sudo dnf install ncurses-devel
 ./vim.sh $RPM_BUILD_ROOT /opt/onavim/%{version}
 
-rpm -q npm || sudo dnf install npm
-./npm.sh $RPM_BUILD_ROOT /opt/onavim/%{version}
-
 cp -r src/etc $RPM_BUILD_ROOT/opt/onavim/%{version}
 cp -r src/sh $RPM_BUILD_ROOT/opt/onavim/%{version}
 
