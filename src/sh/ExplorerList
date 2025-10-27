@@ -4,5 +4,5 @@ fnd1='\( -regex "./[^/]*" $* \)'
 fnd2='\( -type d -exec printf "%s:d\n" {} \; -o -name *.swp -o -print \)'
 
 gsed 's#^.*$#-o -regex &/[^/]*#' |
-    xargs bash -c "find . -mindepth 1 $fnd1 $fnd2 -o -prune" -- | sort -t: -k1,1 |
+    xargs bash -c "find . -mindepth 1 $fnd1 $fnd2 -o -prune" -- | LC_ALL=C sort -f -t: -k1,1 |
     gawk -v n="$1" '$0=="./"n { ind=i+1 } { print substr($0,3); i++ } END { print ind ":" i }'
