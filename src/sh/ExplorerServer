@@ -18,13 +18,13 @@ function heightAppliedTmpf {
     tota=${states#*.}
     context=$(($height/2))
     if [[ $line -le $context ]]; then
-        cat $tmpf | head -n $height
+        sed '$d' $tmpf | head -n $height
     elif [[ $(($tota - $line)) -le $context ]]; then
-        cat $tmpf | tail -n $height
+        sed '$d' $tmpf | tail -n $height
     else
         first=$(($line - $context))
         last=$(($line + $context))
-        cat $tmpf | gsed -n -e "$first,$last p" -e "$(($last + 1)) q"
+        sed '$d' $tmpf | gsed -n -e "$first,$last p" -e "$(($last + 1)) q"
     fi 
 }
 
@@ -33,7 +33,7 @@ function previewWithPath {
         return
     fi
     echo $1 |
-        gsed 's#/#/\n#g' |
+        gsed 's#/#\n#g' |
         gawk 'BEGIN { l="." }{ l=l"/"$0; print l }' |
         $(dirname $0)/ExplorerList "$1" > $tmpf
     tput cup 0 0

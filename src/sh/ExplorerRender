@@ -2,3 +2,5 @@
 
 path=$1
 width=$2
+
+gawk -v p="$path" -v w=$width -f $(dirname $0)/ExplorerRender.awk

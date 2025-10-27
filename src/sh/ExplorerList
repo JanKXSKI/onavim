@@ -1,5 +1,5 @@
 #! /usr/bin/env bash
 
 gsed 's#^.*$#-o -regex &/[^/]*#' |
-    xargs -J % find . -mindepth 1 \( -regex "./[^/]*" % \) -print -o -prune |
+    xargs -J % find -s . -mindepth 1 \( -regex "./[^/]*" % \) -print -o -prune |
     gawk -v n="$1" '$0=="./"n { ind=i+1 } { print substr($0,3); i++ } END { print ind ":" i }'
