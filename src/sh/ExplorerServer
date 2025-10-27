@@ -14,8 +14,8 @@ function init {
 
 function heightAppliedTmpf {
     stats=$(tail -n 1 $tmpf)
-    line=${states%:*}
-    tota=${states#*.}
+    line=${stats%:*}
+    tota=${stats#*:}
     context=$(($height/2))
     if [[ $line -le $context ]]; then
         gsed '$d' $tmpf | head -n $height
