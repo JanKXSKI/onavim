@@ -25,7 +25,7 @@ function heightAppliedTmpf {
         first=$(($line - $context))
         last=$(($line + $context))
         sed '$d' $tmpf | gsed -n -e "$first,$last p" -e "$(($last + 1)) q"
-    fi 
+    fi
 }
 
 function previewWithPath {
