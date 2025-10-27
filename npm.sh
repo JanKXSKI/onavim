@@ -7,3 +7,4 @@ onavimDir=$2
 
 cd $buildRoot/$onavimDir
 npm install pyright
+rm package.json package-lock.json
