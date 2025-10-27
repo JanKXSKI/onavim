@@ -37,7 +37,8 @@ function previewWithPath {
         gawk 'BEGIN { l="." }{ l=l"/"$0; print l }' |
         $(dirname $0)/ExplorerList "$1" > $tmpf
     tput cup 0 0
-    heightAppliedTmpf | $(dirname $0)/ExplorerRender $1 $width
+    heightAppliedTmpf |
+        gawk -v p="$1" -v w=$width -f $(dirname $0)/ExplorerRender.awk
     tput ed
 }
 
