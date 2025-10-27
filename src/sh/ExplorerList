@@ -1,7 +1,7 @@
 #! /usr/bin/env bash
 
 fnd1='\( -regex "./[^/]*" $* \)'
-fnd2='\( -type d -exec printf "%s:d\n" {} \; -o -print \)'
+fnd2='\( -type d -exec printf "%s:d\n" {} \; -o -name *.swp -o -print \)'
 
 gsed 's#^.*$#-o -regex &/[^/]*#' |
     xargs bash -c "find . -mindepth 1 $fnd1 $fnd2 -o -prune" -- | sort -t: -k1,1 |
