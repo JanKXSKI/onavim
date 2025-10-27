@@ -5,6 +5,7 @@ mkdir -p "$rund"
 . $(dirname $0)/logging.sh "$rund"
 
 sed --version | grep -q GNU && export PATH="$(realpath $(dirname $0)/../gnu-alias):$PATH"
+export LANG=en_US.UTF-8
 
 tmuxSocket="/tmp/$$.code.tmux.socket"
 trap "rm $tmuxSocket" EXIT
