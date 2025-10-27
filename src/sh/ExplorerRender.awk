@@ -1,10 +1,6 @@
-BEGIN {
-    ses[0] = " "
-    ses[1] = "│"
-    ses[2] = "╰"
-    ses[3] = "╰"
+$0==p {
+    print "--" $0
+    next
 }
 
-{
-    print $0
-}
+$0
