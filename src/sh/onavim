@@ -20,10 +20,10 @@ function launch {
         location="${1#*@}"
         remote="${location%:*}"
         folder=$(ssh "$remote" "realpath '${location#*:}'")
-        sesl="$remote:$folder"
+        sesl="ssh@$remote:$folder"
         $(dirname $0)/WriteLeastRecentlyUsed "$rund/sessions" "$sesl"
-        rdir=".onavim/sessions-from/$(hostname -f)"
-        rdir=$(ssh "$remote" "mkdir -p '$rdir' && realpath '$rdir'")
+        rdir="\$HOME/.onavim/sessions-from/$(hostname -f)"
+        rdir=$(ssh "$remote" "mkdir -p $rdir && realpath $rdir")
         sess="$rdir/sessions"
         scp "$rund/sessions" "$remote:$sess"
         ssh -t "$remote" "/opt/onavim/$version/CodeMain '$folder' '$sess'"
@@ -31,14 +31,14 @@ function launch {
     elif [[ "$kind" == "podman" ]]; then
         location="${1#*@}"
         container="${location%:*}"
-        folder=$(podman exec -i "$container" "bash -c 'realpath ${location#*:}'")
-        sesl="$container:$folder"
+        folder=$(podman exec -i "$container" bash -c "realpath ${location#*:}")
+        sesl="podman@$container:$folder"
         $(dirname $0)/WriteLeastRecentlyUsed "$rund/sessions" "$sesl"
-        rdir=".onavim/sessions-from/$(hostname -f)"
-        rdir=$(podman exec -i "$container" "bash -c 'mkdir -p $rdir && realpath $rdir")
+        rdir="\$HOME/.onavim/sessions-from/$(hostname -f)"
+        rdir=$(podman exec -i "$container" bash -c "mkdir -p $rdir && realpath $rdir")
         sess="$rdir/sessions"
         podman cp "$rund/sessions" "$container:$sess"
-        podman exec -it "$container" "/opt/onavim/$version/CodeMain '$folder' '$sess'"
+        podman exec -it "$container" /opt/onavim/$version/sh/CodeMain "$folder" "$sess"
         podman cp "$container:$sess" "$rund/sessions"
     fi
     next=$(tail -n 1 "$rund/sessions")
