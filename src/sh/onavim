@@ -8,23 +8,38 @@ sessionLocation="$1"
 [[ -z "$sessionLocation" && -e "$rund/sessions" ]] && sessionLocation=$(tail -n 1 "$rund/sessions")
 [[ -z "$sessionLocation" ]] && sessionLocation=$(pwd)
 
+read version <$(dirname $0)/../version
+
 function launch {
-    remote="${1%:*}"
-    if [[ "$remote" != "$1" ]]; then
-        me=$(hostname -f)
-        folder=$(ssh "$remote" "realpath '${1#*:}'")
-        sesl="$remote:$folder"
-        $(dirname $0)/WriteLeastRecentlyUsed "$rund/sessions" "$sesl"
-        rdir=".onavim/sessions-from/$me"
-        rdir=$(ssh "$remote" "mkdir -p '$rdir' && realpath '$rdir'")
-        sess="$rdir/sessions"
-        scp "$rund/sessions" "$remote:$sess"
-        ssh -t "$remote" "$(dirname $0)/CodeMain '$folder' '$sess'"
-        scp "$remote:$sess" "$rund/sessions"
-    else
+    kind="${1%@*}"
+    if [[ "$kind" == "$1" ]]; then
         sesl="$(realpath $1)"
         $(dirname $0)/WriteLeastRecentlyUsed "$rund/sessions" "$sesl"
         $(dirname $0)/CodeMain "$sesl" "$rund/sessions"
+    elif [[ "$kind" == "ssh" ]]; then
+        location="${1#*@}"
+        remote="${location%:*}"
+        folder=$(ssh "$remote" "realpath '${location#*:}'")
+        sesl="$remote:$folder"
+        $(dirname $0)/WriteLeastRecentlyUsed "$rund/sessions" "$sesl"
+        rdir=".onavim/sessions-from/$(hostname -f)"
+        rdir=$(ssh "$remote" "mkdir -p '$rdir' && realpath '$rdir'")
+        sess="$rdir/sessions"
+        scp "$rund/sessions" "$remote:$sess"
+        ssh -t "$remote" "/opt/onavim/$version/CodeMain '$folder' '$sess'"
+        scp "$remote:$sess" "$rund/sessions"
+    elif [[ "$kind" == "podman" ]]; then
+        location="${1#*@}"
+        container="${location%:*}"
+        folder=$(podman exec -i "$container" "bash -c 'realpath ${location#*:}'")
+        sesl="$container:$folder"
+        $(dirname $0)/WriteLeastRecentlyUsed "$rund/sessions" "$sesl"
+        rdir=".onavim/sessions-from/$(hostname -f)"
+        rdir=$(podman exec -i "$container" "bash -c 'mkdir -p $rdir && realpath $rdir")
+        sess="$rdir/sessions"
+        podman cp "$rund/sessions" "$container:$sess"
+        podman exec -it "$container" "/opt/onavim/$version/CodeMain '$folder' '$sess'"
+        podman cp "$container:$sess" "$rund/sessions"
     fi
     next=$(tail -n 1 "$rund/sessions")
     [[ "$next" == "$sesl" ]] && return

@@ -41,6 +41,7 @@ rpm -q ncurses-devel || sudo dnf install ncurses-devel
 cp -r src/etc $RPM_BUILD_ROOT/opt/onavim/%{version}
 cp -r src/sh $RPM_BUILD_ROOT/opt/onavim/%{version}
 cp -r src/gnu-alias $RPM_BUILD_ROOT/opt/onavim/%{version}
+cp src/version $RPM_BUILD_ROOT/opt/onavim/%{version}
 
 ./plug.sh $RPM_BUILD_ROOT /opt/onavim/%{version}
 
