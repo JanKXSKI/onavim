@@ -64,11 +64,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'yegappan/lsp'
 call plug#end()
 
-try
-    colorscheme gruvbox
-catch
-    echom "Gruvbox still missing, expected when installing plugins."
-endtry
+silent! colorscheme gruvbox
 
 set background=dark
 
