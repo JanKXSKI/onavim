@@ -1,7 +1,7 @@
 ARG BASE_IMAGE=registry.redhat.io/ubi8/ubi
 FROM ${BASE_IMAGE}
 USER root
-RUN dnf install -y rpm-build && mkdir -p rpmbuild/SPECS && mkdir -p rpmbuild/SOURCES
-COPY . onavim
-RUN cd onavim && ./rpm.sh
-RUN find . -path rpmbuild/RPMS/*/onavim* -exec dnf install -y {}
+RUN dnf install -y rpm-build && mkdir -p /root/rpmbuild/SPECS && mkdir -p /root/rpmbuild/SOURCES
+COPY . /root/onavim
+RUN cd /root/onavim && ./rpm.sh
+RUN find /root/rpmbuild/RPMS -path */onavim* -exec dnf install -y {} \;
