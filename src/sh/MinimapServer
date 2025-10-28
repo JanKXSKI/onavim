@@ -4,8 +4,9 @@ mkdir -p "$rund"
 . $(dirname $0)/logging.sh "$rund"
 
 socket=$rund/$$.socket
-touch "$rund/$$.tmp"
-trap "rm $socket; rm '$rund/$$.tmp'" EXIT
+tmpf=$(mktemp --tmpdir minimap.XXXXXXXXXX)
+touch "$tmpf"
+trap "rm $socket; rm '$tmpf'" EXIT
 
 export TERM=xterm-256color
 
@@ -23,12 +24,12 @@ function setPath {
     $(dirname $0)/../bin/code-minimap --padding $width -V $scale -H 0.2 $path\
         | cut -c 1-$width\
         | gawk -v c=$(tput el) 'NR == 1 { printf("%s%s",$0,c) } NR > 1 { printf("\n%s%s",$0,c) }'\
-        >"$rund/$$.tmp"
+        >"$tmpf"
     from=$(mapDo $2)
     to=$(mapDo $3)
     deleteDo 1 $(($from - 1))
     addDo $from $to
-    deleteDo $(($to + 1)) $(($(wc -l <"$rund/$$.tmp") + 1))
+    deleteDo $(($to + 1)) $(($(wc -l <"$tmpf") + 1))
     tput ed
 }
 
@@ -41,13 +42,13 @@ function keyDo {
 function deleteDo {
     [[ $2 -lt $1 || $1 -lt 1 ]] && return
     tput cup $(($1 - 1)) 0
-    cat "$rund/$$.tmp" | gsed -n "$1,$2{s#^#$(tput setaf 245)#;p;}"
+    cat "$tmpf" | gsed -n "$1,$2{s#^#$(tput setaf 245)#;p;}"
 }
 
 function addDo {
     [[ $2 -lt $1 || $1 -lt 1 ]] && return
     tput cup $(($1 - 1)) 0
-    cat "$rund/$$.tmp" | gsed -n "$1,$2{s#^#$(tput sgr0)$(tput setab 237)#;s#\$#$(tput sgr0)#;p;}"
+    cat "$tmpf" | gsed -n "$1,$2{s#^#$(tput sgr0)$(tput setab 237)#;s#\$#$(tput sgr0)#;p;}"
 }
 
 function caseDo {

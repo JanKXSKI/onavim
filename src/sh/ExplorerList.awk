@@ -1,22 +1,15 @@
-BEGIN {
-    j = 1
-}
-
 $0=="./"n {
-    foo=1
+    foundAt = i + 1
 }
 
 {
-    i = i % h + 1
-    if (i in buf) {
-        j = j % h + 1
-    }
-    buf[i] = substr($0, 3)
+    buf[++i % h + 1] = substr($0, 3)
+    if (foundAt && h in buf && i - foundAt > h / 2)
+        exit
 }
 
 END {
-    while (j in buf) {
-        print buf[j]
-        j = j % h + 1
-    }
+    start = i - h < 1 ? 1 : i - h
+    for (k = start; k <= i; ++k)
+        print buf[k % h + 1]
 }
