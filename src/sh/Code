@@ -25,7 +25,7 @@ explorerHeight=$(($h - $bot - 1))
 tmux -2 -S "$tmuxSocket" split-window -d -t $explorerPaneId -l $bot \
     "$sh/Status $side $bot '$sess' '$tmuxSocket'"
 tmux -2 -S "$tmuxSocket" pipe-pane -I -t {bottom-right} "echo 'sessions'"
-tmux -2 -S "$tmuxSocket" bind-key -n C-e \
+tmux -2 -S "$tmuxSocket" bind-key -n M-e \
     pipe-pane -I -t {bottom-right} "echo 'explorer'" \\\; \
     select-pane -t {bottom-right}
 
