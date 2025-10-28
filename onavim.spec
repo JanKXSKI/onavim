@@ -38,6 +38,10 @@ rm -f code-minimap-v0.6.8-x86_64-unknown-linux-gnu.tar.gz
 rpm -q ncurses-devel || sudo dnf install ncurses-devel
 ./vim.sh $RPM_BUILD_ROOT /opt/onavim/%{version}
 
+rpm -q pipx || sudo dnf install pipx
+pipx install conan
+
+
 cp -r src/etc $RPM_BUILD_ROOT/opt/onavim/%{version}
 cp -r src/sh $RPM_BUILD_ROOT/opt/onavim/%{version}
 cp -r src/gnu-alias $RPM_BUILD_ROOT/opt/onavim/%{version}
