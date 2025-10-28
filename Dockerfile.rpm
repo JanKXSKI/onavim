@@ -2,5 +2,6 @@ ARG BASE_IMAGE=registry.redhat.io/ubi8/ubi
 FROM ${BASE_IMAGE}
 USER root
 RUN dnf install -y rpm-build && mkdir -p rpmbuild/SPECS && mkdir -p rpmbuild/SOURCES
-RUN git clone https://github.com/JanKXSKI/onavim.git && cd onavim && ./rpm.sh
+COPY . onavim
+RUN cd onavim && ./rpm.sh
 RUN find . -path rpmbuild/RPMS/*/onavim* -exec dnf install -y {}
