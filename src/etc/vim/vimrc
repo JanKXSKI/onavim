@@ -38,8 +38,8 @@ nnoremap <Leader>n :LspGotoDefinition <CR>
 
 nnoremap <C-P> :call ToggleCodeTerminal() <CR>
 inoremap <C-P> <Esc> :call ToggleCodeTerminal() <CR>
-tnoremap ww <C-W>: call ToggleCodeTerminal() <CR>
-tnoremap vv <C-W>N
+tnoremap vv <C-W>: call ToggleCodeTerminal() <CR>
+tnoremap ww <C-W>N
 
 set tabstop=4
 set shiftwidth=4 smarttab expandtab
