@@ -1,6 +1,7 @@
 set runtimepath=$VIM,$VIMRUNTIME
 
 source $VIMRUNTIME/defaults.vim
+set mouse=
 
 syntax enable
 
@@ -36,10 +37,10 @@ nnoremap <Leader>r :OpSession <CR>
 nnoremap <Leader>p :vsp <bar> :exe "lcd "..expand("%:h") <bar> :terminal ++curwin <CR>
 nnoremap <Leader>n :LspGotoDefinition <CR>
 
-nnoremap <C-P> :call ToggleCodeTerminal() <CR>
-inoremap <C-P> <Esc> :call ToggleCodeTerminal() <CR>
-tnoremap vv <C-W>: call ToggleCodeTerminal() <CR>
-tnoremap ww <C-W>N
+nnoremap ö :call ToggleCodeTerminal() <CR>
+inoremap ö <Esc> :call ToggleCodeTerminal() <CR>
+tnoremap ö <C-W>: call ToggleCodeTerminal() <CR>
+tnoremap vv <C-W>N
 
 set tabstop=4
 set shiftwidth=4 smarttab expandtab
