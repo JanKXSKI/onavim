@@ -49,7 +49,7 @@ trap cleanup EXIT
 sessionVim="$(dirname $sess)/vim-sessions/$(pwd | gsed 's#/#ESCAPED_SLASH#g').vim"
 settingsVim="$HOME/.onavimrc"
 [[ -e $sessionVim ]] && sessionOption="-S $sessionVim"
-[[ -e $settingsVim ]] && sessionOption="$sessionOption -S $settingsVim "
+[[ -e $settingsVim ]] && sessionOption="$sessionOption -S $settingsVim"
 
 tmux -2 -S "$tmuxSocket" set -g prefix None
 export PATH="$sh/restoretmuxbin:$PATH"
