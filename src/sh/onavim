@@ -26,7 +26,7 @@ function launch {
         rdir=$(ssh "$remote" "mkdir -p $rdir && realpath $rdir")
         sess="$rdir/sessions"
         scp "$rund/sessions" "$remote:$sess"
-        ssh -t "$remote" "/opt/onavim/$version/CodeMain '$folder' '$sess'"
+        ssh -t "$remote" "/opt/onavim/$version/sh/CodeMain '$folder' '$sess'"
         scp "$remote:$sess" "$rund/sessions"
     elif [[ "$kind" == "podman" ]]; then
         location="${1#*@}"
