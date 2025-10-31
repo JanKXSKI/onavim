@@ -10,5 +10,5 @@ RUN find /root/rpmbuild/RPMS -path */onavim* -exec dnf install -y {} \;
 RUN alternatives --set python3 /usr/bin/python3.11
 RUN python3 -m ensurepip
 RUN python3 -m pip install --upgrade pip
-RUN python3 -m pip install python-lsp-server pytest pexpect pytest-httpserver
+RUN python3 -m pip install python-lsp-server pytest pexpect pytest-httpserver requests
 COPY pylsp.vim.settings /root/.onavimrc
