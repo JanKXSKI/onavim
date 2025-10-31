@@ -11,3 +11,4 @@ RUN alternatives --set python3 /usr/bin/python3.11
 RUN python3 -m ensurepip
 RUN python3 -m pip install --upgrade pip
 RUN python3 -m pip install python-lsp-server pytest pexpect
+COPY pylsp.vim.settings /root/.onavimrc
