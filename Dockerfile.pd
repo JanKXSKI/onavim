@@ -1,0 +1,13 @@
+ARG BASE_IMAGE=registry.redhat.io/ubi8/ubi
+FROM ${BASE_IMAGE}
+USER root
+RUN dnf install -y rpm-build && mkdir -p /root/rpmbuild/SPECS && mkdir -p /root/rpmbuild/SOURCES
+COPY onavim.spec /root/rpmbuild/SPECS
+COPY onavim-*.tar.gz /root/rpmbuild/SOURCES
+RUN rpmbuild -ba /root/rpmbuild/SPECS/onavim.spec
+RUN find /root/rpmbuild/RPMS -path */onavim* -exec dnf install -y {} \;
+
+RUN alternatives --set python3 /usr/bin/python3.11
+RUN python3 -m ensurepip
+RUN python3 -m pip install --upgrade pip
+RUN python3 -m pip install python-lsp-server pytest pexpect
