@@ -30,10 +30,10 @@ if exists("g:codeOpGrepServerSocket")
         call setloclist(0, a:selected, "r")
         ll
     endfunction
-    let s:source = "'ag -c <args>'"
+    let s:source = "'ag -c --hidden <args>'"
     let s:preview = "'bat -n --color=always $("..expand("<script>:h").."/../../../sh/RequestEval "..g:codeOpGrepServerSocket.." preview {1} $FZF_PREVIEW_LINES <args>) {1}'"
     let s:bindNext = "'--bind', 'ctrl-n:refresh-preview'"
-    let s:bindIgnore = "'--bind', 'ctrl-g:reload(ag -cU <args>)'"
+    let s:bindIgnore = "'--bind', 'ctrl-g:reload(ag -cU --hidden <args>)'"
     let s:bindAll = "'--bind', 'ctrl-a:toggle-all'"
     let s:options = "['-d', ':', '--nth', '1', '--multi', '--preview', "..s:preview..", "..s:bindNext..", "..s:bindClearQuery..", "..s:bindIgnore..", "..s:bindAll.."]"
     exe "command -nargs=+ OpGrep call fzf#run(fzf#wrap({'source': " s:source ", 'options':" s:options ", 'sinklist': function('OpGrepSink')}))"
