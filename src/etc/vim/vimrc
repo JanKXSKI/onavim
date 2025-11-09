@@ -94,7 +94,7 @@ autocmd User LspSetup call LspOptionsSet(lspOpts)
 
 let g:lspServers = [#{
             \    name: 'clang',
-            \    filetype: ['h', 'c', 'cpp'],
+            \    filetype: ['h', 'c', 'cpp', 'objcpp'],
             \    path: '/usr/bin/clangd',
             \    args: ['--background-index']
             \  }]
