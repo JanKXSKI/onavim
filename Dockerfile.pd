@@ -12,3 +12,6 @@ RUN python3 -m ensurepip
 RUN python3 -m pip install --upgrade pip
 RUN python3 -m pip install "python-lsp-server[yapf]" pytest pexpect pytest-httpserver requests
 COPY pylsp.vim.settings /root/.onavimrc
+
+ENTRYPOINT ""
+CMD "/bin/bash -c 'usr/sbin/sshd -p 53022 && exec bash -l'"
