@@ -11,7 +11,16 @@ RUN alternatives --set python3 /usr/bin/python3.11
 RUN python3 -m ensurepip
 RUN python3 -m pip install --upgrade pip
 RUN python3 -m pip install "python-lsp-server[yapf]" pytest pexpect pytest-httpserver requests
-COPY pylsp.vim.settings /root/.onavimrc
+COPY lsp.pylsp.vim /root
 
-ENTRYPOINT ""
-CMD "/bin/bash -c 'usr/sbin/sshd -p 53022 && exec bash -l'"
+RUN dnf remove -y nodejs
+RUN dnf module -y reset nodejs
+RUN dnf module -y enable nodejs:20
+RUN dnf install -y nodejs
+RUN npm install -g vscode-json-languageserver
+COPY lsp.json.vscode.vim /root
+
+COPY pd.onavimrc /root/.onavimrc
+
+ENTRYPOINT []
+CMD ["/bin/bash", "-c", "/usr/sbin/sshd -p 53022 && exec bash -l"]

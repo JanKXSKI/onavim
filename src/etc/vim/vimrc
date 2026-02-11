@@ -97,12 +97,6 @@ let g:lspServers = [#{
             \    filetype: ['h', 'c', 'cpp', 'objcpp'],
             \    path: '/usr/bin/clangd',
             \    args: ['--background-index']
-            \  },
-            \  #{
-            \    name: 'swiftls',
-            \    filetype: ['swift'],
-            \    path: '/usr/bin/xcrun',
-            \    args: ['sourcekit-lsp']
             \  }]
 autocmd User LspSetup call LspAddServer(lspServers)
 nnoremap <Leader>? :LspDiagCurrent <CR>
