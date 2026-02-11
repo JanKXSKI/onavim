@@ -1,7 +1,6 @@
-call LspAddServer([
-            \ #{name: 'pylsp',
-            \   filetype: 'python',
-            \   path: '/usr/local/bin/pylsp',
-            \   args: []
-            \ }
-])
+call LspAddServer([#{
+            \ name: 'pylsp',
+            \ filetype: 'python',
+            \ path: '/usr/local/bin/pylsp',
+            \ args: []
+            \ }])
