@@ -6,6 +6,7 @@ set mouse=
 syntax enable
 
 inoremap vv <Esc>
+nnoremap <Enter> i
 nnoremap <C-S> :w <CR>
 nnoremap <C-H> <C-W>h
 nnoremap <C-S-H> <C-W>h
@@ -16,7 +17,7 @@ nnoremap <C-S-K> <C-W>k
 nnoremap <C-L> <C-W>l
 nnoremap <C-S-L> <C-W>l
 
-nnoremap gf :vertical wincmd F <CR> <bar> :wincmd H <CR>
+nnoremap gf :wincmd F <CR>
 
 let mapleader = " "
 
