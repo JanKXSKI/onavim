@@ -102,3 +102,5 @@ let g:lspServers = [#{
 autocmd User LspSetup call LspAddServer(lspServers)
 nnoremap <Leader>? :LspDiagCurrent <CR>
 nnoremap =% :LspFormat <CR>
+
+autocmd BufEnter,BufFilePre *.metal set filetype=cpp
