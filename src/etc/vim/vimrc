@@ -35,7 +35,7 @@ nnoremap <Leader>g :call OpGrepWithWordUnderCursor() <CR>
 nnoremap <Leader>b :OpGitLog <CR>
 nnoremap <Leader>d :let @d=expand('%:p').':'.line('.')<CR>:let @j='com.'.substitute(split(expand('%:r'), '/com/')[-1].':'.line('.'), '/', '.', 'g')<CR>
 nnoremap <Leader>r :OpSession <CR>
-nnoremap <Leader>p :call term_start("bash -i", { "cwd": expand("%:h"), "term_finish": "close" }) 
+nnoremap <Leader>p :call term_start("bash -i", { "cwd": expand("%:h"), "term_finish": "close" }) <CR>
 nnoremap <Leader>n :LspGotoDefinition <CR>
 
 nnoremap ö :call ToggleCodeTerminal() <CR>
