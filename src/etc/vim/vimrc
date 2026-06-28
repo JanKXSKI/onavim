@@ -38,9 +38,9 @@ nnoremap <Leader>r :OpSession <CR>
 nnoremap <Leader>p :call term_start("bash -i", { "cwd": expand("%:h"), "term_finish": "close" }) <CR>
 nnoremap <Leader>n :LspGotoDefinition <CR>
 
-nnoremap ö :call ToggleCodeTerminal() <CR>
-inoremap ö <Esc> :call ToggleCodeTerminal() <CR>
-tnoremap ö <C-W>: call ToggleCodeTerminal() <CR>
+nnoremap ; :call ToggleCodeTerminal() <CR>
+inoremap ; <Esc> :call ToggleCodeTerminal() <CR>
+tnoremap ; <C-W>: call ToggleCodeTerminal() <CR>
 tnoremap vv <C-W>N
 
 set tabstop=4
