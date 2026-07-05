@@ -104,3 +104,4 @@ nnoremap <Leader>? :LspDiagCurrent <CR>
 nnoremap =% :LspFormat <CR>
 
 autocmd BufEnter,BufFilePre *.metal set filetype=cpp
+autocmd BufEnter,BufFilePre *.fbs set filetype=cpp
