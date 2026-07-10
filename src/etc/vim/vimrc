@@ -105,3 +105,8 @@ nnoremap =% :LspFormat <CR>
 
 autocmd BufEnter,BufFilePre *.metal set filetype=cpp
 autocmd BufEnter,BufFilePre *.fbs set filetype=cpp
+
+let g:netrw_liststyle = 3
+let g:netrw_banner = 0
+nnoremap <Leader>e :Sex <CR>
+nnoremap <Leader>x :Rex <CR>
