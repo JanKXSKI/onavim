@@ -1,4 +1,5 @@
 *.swp
+*.netrwhist
 run
 plugged
 node_modules
